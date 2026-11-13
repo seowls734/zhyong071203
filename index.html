@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>장호영 | 자기소개</title>
+  <meta name="description" content="중국에서 온 스무 살 장호영입니다. 중국어와 한국어, 두 언어로 소통합니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="장호영 | 자기소개" />
+  <meta property="og:description" content="중국에서 온 장호영입니다. · Haoyong Zhang from China, speaking Chinese and Korean." />
+  <!-- 공유 미리보기 이미지: 사이트 주소가 바뀌면 아래 두 주소도 바꿔 주세요 -->
+  <meta property="og:image" content="https://haoyongzhang147.github.io/potporrio_/images/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://haoyongzhang147.github.io/potporrio_/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#c8372d" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23c8372d'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='white' font-family='serif'%3E張%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    try {
+      const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t;
+      const l = localStorage.getItem("lang"); if (l === "en" || l === "zh") document.documentElement.lang = l;
+    } catch (e) {}
+    // 오프닝 애니메이션: 처음 들어올 때 한 번만 (움직임 줄이기 설정이면 생략)
+    try {
+      if (!sessionStorage.getItem("plotted") && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("is-loading");
+        setTimeout(() => document.documentElement.classList.remove("is-loading"), 6000); // 안전장치
+      }
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <!-- 오프닝: 도면 출력 중 -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="ld-box mono">
+      <div class="ld-top"><span class="brand-seal serif">張</span><span>DWG. SET No.01</span><span class="ld-pct" id="ldPct">000%</span></div>
+      <p class="ld-status"><span data-i18n="ld.status">도면 출력 중</span><span class="ld-dots"></span></p>
+      <div class="ld-bar"><b id="ldBar"></b></div>
+      <ul class="ld-list" id="ldList">
+        <li>A-00 COVER</li><li>A-01 FLOOR PLAN</li><li>A-02 SECTION</li><li>A-03 SITE LOG</li><li>A-04 RENDERING</li><li>A-05 TITLE BLOCK</li>
+      </ul>
+      <p class="ld-skip" data-i18n="ld.skip">클릭하면 건너뜁니다</p>
+    </div>
+  </div>
+
+  <!-- 도면 테두리 + 커서 십자선 (장식) -->
+  <div class="frame" aria-hidden="true">
+    <div class="ticks ticks-top"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span></div>
+    <div class="ticks ticks-left"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+  </div>
+  <div class="cross" id="cross" aria-hidden="true"><i class="cx"></i><i class="cy"></i></div>
+  <div class="coords mono" id="coords" aria-hidden="true">X 0000 · Y 0000</div>
+
+  <!-- 상단 바 -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="#" class="brand">
+        <span class="brand-seal serif">張</span>
+        <span class="brand-text"><b class="serif" data-i18n="name">장호영</b><small class="mono">DWG. SET No.01</small></span>
+      </a>
+      <nav class="menu" id="menu">
+        <a href="#profile"><i class="mono">A-01</i><span data-i18n="nav.profile">프로필</span></a>
+        <a href="#journey"><i class="mono">A-02</i><span data-i18n="nav.journey">걸어온 길</span></a>
+        <a href="#log"><i class="mono">A-03</i><span data-i18n="nav.log">경험</span></a>
+        <a href="#dream"><i class="mono">A-04</i><span data-i18n="nav.dream">꿈</span></a>
+        <a href="#contact"><i class="mono">A-05</i><span data-i18n="nav.contact">연락</span></a>
+      </nav>
+      <div class="actions">
+        <button class="chip mono" id="langBtn" aria-label="언어 전환 / Change language">
+          <span data-l="ko">한</span><span data-l="en">EN</span><span data-l="zh">中</span>
+        </button>
+        <button class="chip mono" id="themeBtn" aria-label="테마 전환">
+          <span class="t-paper" data-i18n="theme.paper">종이</span><span class="t-blue" data-i18n="theme.blue">청사진</span>
+        </button>
+        <button class="chip burger" id="burger" aria-label="메뉴">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= A-00 표지 ================= -->
+    <section class="cover wrap" id="top">
+      <div class="sheet-head mono">
+        <span>A-00</span><span data-i18n="sh.cover">표지 · COVER</span><span class="grow"></span><span>SCALE 1 : 1</span>
+      </div>
+
+      <div class="cover-grid">
+        <div class="cover-text">
+          <p class="cover-kicker mono" data-i18n="cover.kicker">PROJECT — 한 사람을 짓는 중</p>
+          <h1 class="cover-title serif" data-i18n="intro.title">안녕하세요,<br /><em>장호영</em>입니다.</h1>
+          <p class="cover-lead" data-i18n="intro.lead">
+            중국에서 <b>기초</b>를 다지고, 한국에서 <b>증축</b> 중인<br />
+            스무 살 장호영입니다. 중국어와 한국어, 두 언어로 생각하고 말합니다.
+          </p>
+          <div class="cover-cta">
+            <a href="#profile" class="btn solid" data-i18n="intro.cta">도면 펼쳐보기 ↓</a>
+            <a href="#contact" class="btn line" data-i18n="intro.cta2">연락하기</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 스스로 그려지는 아이소메트릭 건물 -->
+      <svg class="iso" viewBox="0 0 600 420" aria-hidden="true">
+        <g class="construct">
+          <line pathLength="1" x1="40" y1="380" x2="560" y2="380" />
+          <line pathLength="1" x1="300" y1="400" x2="300" y2="30" />
+          <line pathLength="1" x1="120" y1="276" x2="500" y2="496" />
+          <line pathLength="1" x1="500" y1="264" x2="120" y2="484" />
+        </g>
+        <g class="draw">
+          <polyline pathLength="1" points="196.1,320 300,380 438.6,300" />
+          <line pathLength="1" x1="196.1" y1="320" x2="196.1" y2="140" />
+          <line pathLength="1" x1="300" y1="380" x2="300" y2="200" />
+          <line pathLength="1" x1="438.6" y1="300" x2="438.6" y2="120" />
+          <polygon pathLength="1" points="196.1,140 300,200 438.6,120 334.7,60" />
+          <polygon pathLength="1" points="317.3,260 352,240 352,200 317.3,220" />
+          <polygon pathLength="1" points="386.6,220 421.2,200 421.2,160 386.6,180" />
+          <polygon pathLength="1" points="317.3,330 352,310 352,270 317.3,290" />
+          <polygon pathLength="1" class="door" points="386.6,330 421.2,310 421.2,230 386.6,250" />
+          <polygon pathLength="1" points="282.7,350 265.4,340 265.4,200 282.7,210" />
+          <polygon pathLength="1" points="239.4,325 222.1,315 222.1,175 239.4,185" />
+          <!-- 옥상 크레인: 아직 짓는 중 -->
+          <polyline pathLength="1" class="crane" points="360,72 360,10 300,10 460,10" />
+          <line pathLength="1" class="crane" x1="440" y1="10" x2="440" y2="44" />
+        </g>
+        <g class="dims">
+          <line pathLength="1" x1="317" y1="392" x2="455.6" y2="312" />
+          <line pathLength="1" x1="312" y1="386" x2="322" y2="398" />
+          <line pathLength="1" x1="450.6" y1="306" x2="460.6" y2="318" />
+          <text x="402" y="372" transform="rotate(-30 402 372)">2007 → NOW</text>
+        </g>
+      </svg>
+
+      <!-- 설계 개요 (Design Brief) -->
+      <p class="brief-title mono" data-i18n="brief.title">설계 개요 · DESIGN BRIEF</p>
+      <dl class="spec">
+        <div><dt class="mono" data-i18n="b.name.k">건물명</dt><dd data-i18n="b.name.v">장호영 (20세, 2007년 착공)</dd></div>
+        <div><dt class="mono" data-i18n="b.found.k">기초</dt><dd data-i18n="b.found.v">중국 · 모국어 중국어</dd></div>
+        <div><dt class="mono" data-i18n="b.ext.k">증축</dt><dd><span data-i18n="b.ext.v">한국 · 2021년부터</span> <small class="mono muted" id="yearsKr"></small></dd></div>
+        <div><dt class="mono" data-i18n="b.site.k">대지 위치</dt><dd data-i18n="b.site.v">경기도 화성시</dd></div>
+        <div><dt class="mono" data-i18n="b.use.k">용도</dt><dd data-i18n="b.use.v">학생</dd></div>
+        <div><dt class="mono" data-i18n="b.done.k">준공 예정</dt><dd class="red" data-i18n="b.done.v">꼭대기 층: 고등학교 선생님 — 공사 중</dd></div>
+      </dl>
+    </section>
+
+    <!-- ================= A-01 평면도 ================= -->
+    <section id="profile" class="wrap sheet" data-sheet="A-01">
+      <div class="sheet-head mono">
+        <span>A-01</span><span data-i18n="sh.profile">평면도 · FLOOR PLAN</span><span class="grow"></span><span>SCALE 1 : 50</span>
+      </div>
+      <h2 class="sheet-title serif" data-i18n="profile.title">장호영이라는 집의 평면도</h2>
+      <p class="sheet-desc muted" data-i18n="profile.desc">방 하나하나에 저에 대한 이야기가 들어 있습니다.</p>
+
+      <div class="plan">
+        <article class="room r-story reveal">
+          <span class="room-tag mono">ROOM 01</span>
+          <h3 data-i18n="story.title">이야기</h3>
+          <p class="quote serif" data-i18n="story.q">“사람도 건물처럼, 기초가 단단해야 높이 올라갈 수 있다.”</p>
+          <p data-i18n="story.p1">
+            저는 <strong>2007년 중국</strong>에서 기초를 다졌고, <strong>2021년</strong> 한국으로 와서 새로운 층을 올리기 시작했습니다.
+            지금은 <strong>경기도 화성시</strong>에 살고 있습니다.
+          </p>
+          <p data-i18n="story.p2">
+            새로운 언어로 다시 시작해 한국어능력시험 <strong>최고 등급인 6급</strong>까지 올라왔습니다.
+            문서는 ITQ 한글, 발표는 ITQ 한글 파워포인트 자격증으로 준비했습니다.
+          </p>
+          <p data-i18n="story.p3">쉬는 날에는 축구장을 뛰거나, 누군가 설계한 게임 속 세계를 탐험합니다.</p>
+          <span class="door-swing" aria-hidden="true"></span>
+        </article>
+
+        <article class="room r-stat reveal">
+          <span class="room-tag mono">ROOM 02</span>
+          <div class="stat"><span class="stat-num serif" data-count="20">20</span><span class="muted" data-i18n="stat.unit">살</span></div>
+          <p class="mono small" data-i18n="stat.sub">남자 · 2007년생</p>
+        </article>
+
+        <article class="room r-fact reveal">
+          <span class="room-tag mono">ROOM 03</span>
+          <p class="fact-k mono" data-i18n="flag.k">국적</p>
+          <p class="fact-v serif" data-i18n="flag.v">중국</p>
+        </article>
+
+        <article class="room r-fact reveal">
+          <span class="room-tag mono">ROOM 04</span>
+          <p class="fact-k mono" data-i18n="place.k">거주지</p>
+          <p class="fact-v serif" data-i18n="place.v">경기도 화성시</p>
+        </article>
+
+        <article class="room r-lang reveal">
+          <span class="room-tag mono">ROOM 05</span>
+          <h3 data-i18n="lang.title">언어</h3>
+          <div class="bilingual" aria-hidden="true">
+            <span class="serif">中</span><i></i><span class="serif">한</span>
+          </div>
+          <ul class="rows">
+            <li><strong data-i18n="lang.zh">중국어</strong><span class="grade top" data-i18n="lang.native">모국어</span></li>
+            <li><strong data-i18n="lang.ko">한국어</strong><span class="grade top">TOPIK <span data-i18n="lang.g6">6급</span></span></li>
+          </ul>
+        </article>
+
+        <article class="room r-cert reveal">
+          <span class="room-tag mono">ROOM 06</span>
+          <h3 data-i18n="cert.title">자격증</h3>
+          <ul class="rows">
+            <li>
+              <div><strong data-i18n="cert.topik">TOPIK 한국어능력시험</strong><small data-i18n="cert.niied">국립국제교육원</small></div>
+              <span class="grade top" data-i18n="cert.g6">6급</span>
+            </li>
+            <li>
+              <div><strong data-i18n="cert.itqHwp">ITQ 한글</strong><small data-i18n="cert.kpc">한국생산성본부</small></div>
+              <span class="grade" data-i18n="cert.gB">B등급</span>
+            </li>
+            <li>
+              <div><strong data-i18n="cert.itqPpt">ITQ 한글 파워포인트</strong><small data-i18n="cert.kpc">한국생산성본부</small></div>
+              <span class="grade" data-i18n="cert.gC">C등급</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="room r-school reveal">
+          <span class="room-tag mono">ROOM 07</span>
+          <p class="fact-k mono" data-i18n="kr.k">한국 생활</p>
+          <p class="fact-v serif"><span data-i18n="kr.pre">햇수로</span> <span id="krYears">6</span><span data-i18n="kr.post">년째</span></p>
+        </article>
+
+        <article class="room r-hobby reveal">
+          <span class="room-tag mono">ROOM 08</span>
+          <h3 data-i18n="hobby.title">취미</h3>
+          <div class="hobbies">
+            <div class="hobby">
+              <svg viewBox="0 0 100 60" aria-hidden="true"><rect x="2" y="2" width="96" height="56" /><line x1="50" y1="2" x2="50" y2="58" /><circle cx="50" cy="30" r="10" /><rect x="2" y="18" width="12" height="24" /><rect x="86" y="18" width="12" height="24" /></svg>
+              <div><strong data-i18n="hobby.soccer">축구</strong><small class="mono muted" data-i18n="hobby.soccer.d">105 × 68 m — 가장 좋아하는 평면도</small></div>
+            </div>
+            <div class="hobby">
+              <svg viewBox="0 0 100 60" aria-hidden="true"><rect x="10" y="12" width="80" height="40" rx="18" /><line x1="28" y1="26" x2="28" y2="38" /><line x1="22" y1="32" x2="34" y2="32" /><circle cx="68" cy="28" r="3" /><circle cx="76" cy="36" r="3" /></svg>
+              <div><strong data-i18n="hobby.game">컴퓨터 게임</strong><small class="mono muted" data-i18n="hobby.game.d">누군가 설계한 가상의 공간</small></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= A-02 단면도 (타임라인) ================= -->
+    <section id="journey" class="wrap sheet" data-sheet="A-02">
+      <div class="sheet-head mono">
+        <span>A-02</span><span data-i18n="sh.journey">단면도 · SECTION</span><span class="grow"></span><span>SCALE 1 : 100</span>
+      </div>
+      <h2 class="sheet-title serif" data-i18n="journey.title">한 층씩 쌓아 올린 길</h2>
+      <p class="sheet-desc muted" data-i18n="journey.desc">1층부터 차근차근. 그리고 위층은 아직 공사 중입니다.</p>
+
+      <!-- 총배치도: 중국 → 화성 이동 경로 (스크롤하면 그려짐) -->
+      <figure class="route reveal" id="route">
+        <figcaption class="mono" data-i18n="route.cap">배치도 · SITE PLAN — 중국에서 화성까지</figcaption>
+        <svg viewBox="0 0 800 270" aria-hidden="true">
+          <g class="r-coast">
+            <path d="M0,40 C60,60 90,90 120,110 C150,130 140,170 180,190 C210,205 230,240 260,270" />
+            <path d="M600,0 C590,40 610,70 600,100 C592,130 615,150 610,180 C606,210 630,240 640,270" />
+          </g>
+          <text class="r-sea" x="400" y="250">黄海 · 서해 · YELLOW SEA</text>
+          <path id="routePath" class="r-path" pathLength="1" d="M110,150 C250,30 480,20 640,120" />
+          <g class="r-pin"><circle cx="110" cy="150" r="7" /><circle cx="110" cy="150" r="16" class="ring" /></g>
+          <g class="r-pin now"><circle cx="640" cy="120" r="7" /><circle cx="640" cy="120" r="16" class="ring" /></g>
+          <text class="r-label" x="110" y="190" text-anchor="middle">中国 · 중국 · CHINA</text>
+          <text class="r-year" x="110" y="208" text-anchor="middle">2007</text>
+          <text class="r-label" x="640" y="160" text-anchor="middle">华城 · 화성 · HWASEONG</text>
+          <text class="r-year" x="640" y="178" text-anchor="middle">2021 → NOW</text>
+          <g class="r-plane" id="plane">
+            <path d="M14,0 L-8,-4 L-12,-14 L-17,-14 L-14,-3 L-20,-2 L-24,-8 L-27,-8 L-25,0 L-27,8 L-24,8 L-20,2 L-14,3 L-17,14 L-12,14 L-8,4 Z" />
+            <animateMotion id="planeAnim" dur="2.6s" begin="indefinite" fill="freeze" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".6 0 .3 1">
+              <mpath href="#routePath" />
+            </animateMotion>
+          </g>
+        </svg>
+      </figure>
+
+      <div class="tower">
+        <div class="floor roof reveal">
+          <span class="lvl mono">RF</span>
+          <div class="floor-body">
+            <time class="mono">NEXT</time>
+            <h3 data-i18n="t4.h">다음 층 — 고등학교 선생님이 되기 위해 공사 중</h3>
+            <p data-i18n="t4.p">더 많이 배우고 준비해서, 꼭대기 층에 고등학교 교실을 짓겠습니다.</p>
+          </div>
+        </div>
+        <div class="floor now reveal">
+          <span class="lvl mono">3F</span>
+          <div class="floor-body">
+            <time class="mono">NOW</time>
+            <h3 data-i18n="t3.h">3층 — 지금, 여기</h3>
+            <p data-i18n="t3.p">이 층에는 TOPIK 6급, ITQ 한글 B등급, ITQ 한글 파워포인트 C등급이라는 세 개의 기둥을 세웠습니다. 그리고 지금은 컴퓨터학원 인턴십에서 이 웹사이트를 직접 만들고 있습니다.</p>
+          </div>
+        </div>
+        <div class="floor reveal">
+          <span class="lvl mono">2F</span>
+          <div class="floor-body">
+            <time class="mono">2021</time>
+            <h3 data-i18n="t2.h">2층 — 한국으로 증축</h3>
+            <p data-i18n="t2.p">새로운 나라, 새로운 언어. 경기도 화성시라는 새 대지 위에 다음 층을 올리기 시작했습니다.</p>
+          </div>
+        </div>
+        <div class="floor reveal">
+          <span class="lvl mono">1F</span>
+          <div class="floor-body">
+            <time class="mono">2007</time>
+            <h3 data-i18n="t1.h">1층 — 중국에서 기초 공사</h3>
+            <p data-i18n="t1.p">중국에서 태어나 자랐습니다. 모국어인 중국어가 이 건물의 가장 단단한 기초입니다.</p>
+          </div>
+        </div>
+        <div class="ground mono" data-i18n="ground">▽ GL ±0 — 기초: 두 개의 언어, 두 개의 나라</div>
+      </div>
+    </section>
+
+    <!-- ================= A-03 시공 일지 (경험) ================= -->
+    <section id="log" class="wrap sheet" data-sheet="A-03">
+      <div class="sheet-head mono">
+        <span>A-03</span><span data-i18n="sh.log">시공 일지 · SITE LOG</span><span class="grow"></span><span>REV. 01</span>
+      </div>
+      <h2 class="sheet-title serif" data-i18n="log.title">직접 해 본 일들</h2>
+      <p class="sheet-desc muted" data-i18n="log.desc">많지는 않지만, 하나하나 직접 부딪쳐 본 일들입니다. 해 본 일과 배운 점을 함께 적었습니다.</p>
+
+      <div class="log">
+        <!-- LOG 01: 인턴십 (진행 중) -->
+        <article class="entry entry-main reveal" id="log1">
+          <header class="entry-head mono">
+            <span class="entry-no">LOG 01</span>
+            <span class="entry-st live" data-i18n="log.st.live">진행 중</span>
+            <span class="grow"></span>
+            <time>NOW</time>
+          </header>
+          <h3 data-i18n="log1.h">컴퓨터학원 인턴십</h3>
+          <dl class="entry-rows">
+            <div><dt class="mono" data-i18n="log.did">한 일</dt><dd data-i18n="log1.did">AI와 함께 코드를 쓰며 이 포트폴리오 웹사이트를 직접 기획하고 만들었습니다. HTML·CSS·JavaScript로 화면을 짰고, 학원에서 공부하는 학생들과 이야기도 나눠 보았습니다.</dd></div>
+            <div><dt class="mono" data-i18n="log.learn">배운 점</dt><dd data-i18n="log1.learn">머릿속 생각을 다른 사람이 직접 보고 누를 수 있는 결과물로 만드는 방법을 배우고 있습니다.</dd></div>
+            <div class="to-dream"><dt class="mono" data-i18n="log.dream">→ 꿈과의 연결</dt><dd data-i18n="log1.dream">학생들과 이야기해 보면서, 학생 곁에서 돕는 선생님이 되고 싶다는 마음이 생겼습니다.</dd><a class="ex-go" href="#dream">A-04 ↓</a></div>
+          </dl>
+          <p class="entry-proof mono"><span class="arrow">↖</span> <span data-i18n="log1.proof">지금 보고 계신 이 사이트가 결과물입니다</span></p>
+          <ul class="entry-tags mono"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>AI</li></ul>
+        </article>
+
+        <!-- LOG 02: 반장 -->
+        <article class="entry reveal" id="log2">
+          <header class="entry-head mono">
+            <span class="entry-no">LOG 02</span>
+            <span class="entry-st" data-i18n="log.st.done">완료</span>
+            <span class="grow"></span>
+            <time data-i18n="log2.t">1학기</time>
+          </header>
+          <h3 data-i18n="log2.h">반장</h3>
+          <dl class="entry-rows">
+            <div><dt class="mono" data-i18n="log.did">한 일</dt><dd data-i18n="log2.did">한 학기 동안 반장을 맡아 반의 일을 책임졌습니다.</dd></div>
+            <div><dt class="mono" data-i18n="log.learn">배운 점</dt><dd data-i18n="log2.learn">나 혼자만 잘하는 것보다, 모두를 챙기는 데 더 큰 책임감이 필요하다는 것을 배웠습니다.</dd></div>
+            <div class="to-dream"><dt class="mono" data-i18n="log.dream">→ 꿈과의 연결</dt><dd data-i18n="log2.dream">반 전체를 챙기는 일은 고등학교 담임 선생님이 매일 하는 일입니다. 그 일을 미리 경험해 보았습니다.</dd><a class="ex-go" href="#dream">A-04 ↓</a></div>
+          </dl>
+        </article>
+
+        <!-- LOG 03: 봉사활동 -->
+        <article class="entry reveal" id="log3">
+          <header class="entry-head mono">
+            <span class="entry-no">LOG 03</span>
+            <span class="entry-st live" data-i18n="log.st.on">계속</span>
+            <span class="grow"></span>
+            <time data-i18n="log3.t">틈틈이</time>
+          </header>
+          <h3 data-i18n="log3.h">봉사활동</h3>
+          <dl class="entry-rows">
+            <div><dt class="mono" data-i18n="log.did">한 일</dt><dd data-i18n="log3.did">시간이 날 때마다 봉사활동에 참여하고 있습니다.</dd></div>
+            <div><dt class="mono" data-i18n="log.learn">배운 점</dt><dd data-i18n="log3.learn">다른 사람을 도우면서, 제가 사는 지역과 이웃을 더 잘 알게 되었습니다.</dd></div>
+            <div class="to-dream"><dt class="mono" data-i18n="log.dream">→ 꿈과의 연결</dt><dd data-i18n="log3.dream">선생님은 학생을 돕는 사람입니다. 봉사하며 배운 마음을 교실로 가져가고 싶습니다.</dd><a class="ex-go" href="#dream">A-04 ↓</a></div>
+          </dl>
+        </article>
+
+        <!-- LOG 04: 한국어 -->
+        <article class="entry reveal" id="log4">
+          <header class="entry-head mono">
+            <span class="entry-no">LOG 04</span>
+            <span class="entry-st" data-i18n="log.st.done">완료</span>
+            <span class="grow"></span>
+            <time>2021 →</time>
+          </header>
+          <h3 data-i18n="log4.h">한국어, 0에서 6급까지</h3>
+          <dl class="entry-rows">
+            <div><dt class="mono" data-i18n="log.did">한 일</dt><dd data-i18n="log4.did">한국에 와서 새로운 언어를 처음부터 배워, 한국어능력시험 최고 등급인 6급을 받았습니다.</dd></div>
+            <div><dt class="mono" data-i18n="log.learn">배운 점</dt><dd data-i18n="log4.learn">처음엔 낯선 일도, 매일 조금씩 쌓으면 끝까지 갈 수 있다는 것을 배웠습니다.</dd></div>
+            <div class="to-dream"><dt class="mono" data-i18n="log.dream">→ 꿈과의 연결</dt><dd data-i18n="log4.dream">어려운 공부 앞의 막막한 마음을 알기에, 고등학생의 눈높이에서 차근차근 설명하는 선생님이 되고 싶습니다.</dd><a class="ex-go" href="#dream">A-04 ↓</a></div>
+          </dl>
+        </article>
+
+        <!-- 아직 탐색 중인 방향 -->
+        <aside class="explore reveal">
+          <div class="explore-head">
+            <span class="entry-st live mono" data-i18n="ex.badge">방향 발견</span>
+            <h3 data-i18n="ex.h">해 보면서 찾은 방향</h3>
+            <p class="muted" data-i18n="ex.p">하나씩 직접 해 보고 기록하다 보니, 이 경험들이 모두 한 곳을 가리키고 있었습니다. 저는 <b>고등학교 선생님</b>이 되고 싶습니다. <a class="ex-go" href="#dream">A-04 ↓</a></p>
+          </div>
+          <ul class="samples">
+            <li><span class="sample-no mono">S-1</span><strong data-i18n="ex.s1">언어와 소통</strong><small class="muted" data-i18n="ex.s1d">두 언어 사이를 잇는 일</small></li>
+            <li><span class="sample-no mono">S-2</span><strong data-i18n="ex.s2">컴퓨터로 만들기</strong><small class="muted" data-i18n="ex.s2d">이번 인턴십에서 처음 해 본 일</small></li>
+            <li><span class="sample-no mono">S-3</span><strong data-i18n="ex.s3">사람들과 함께하기</strong><small class="muted" data-i18n="ex.s3d">반장, 봉사, 그리고 축구</small></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= A-04 완공 예상도 (꿈: 선생님) ================= -->
+    <section id="dream" class="wrap sheet" data-sheet="A-04">
+      <div class="sheet-head mono">
+        <span>A-04</span><span data-i18n="sh.dream">완공 예상도 · RENDERING</span><span class="grow"></span><span>FUTURE</span>
+      </div>
+      <h2 class="sheet-title serif" data-i18n="dream.title">꼭대기 층에 들어설 교실</h2>
+      <p class="sheet-desc muted" data-i18n="dream.desc">이 건물이 다 지어지면, 가장 높은 층은 고등학교 교실이 됩니다.</p>
+
+      <div class="dream-hero reveal">
+        <div class="dream-card">
+          <p class="mono dream-k" data-i18n="dream.k">꿈의 용도 · FUTURE USE</p>
+          <p class="dream-job serif" data-i18n="dream.job">고등학교<br />선생님</p>
+          <p class="mono dream-sub">HIGH SCHOOL TEACHER · 高中老师</p>
+          <p class="dream-say" data-i18n="dream.say">저는 <b>고등학교 선생님</b>이 되고 싶습니다.</p>
+        </div>
+        <!-- 칠판 입면도 -->
+        <figure class="board">
+          <svg viewBox="0 0 520 330" aria-hidden="true">
+            <rect class="b-frame" x="20" y="20" width="480" height="210" />
+            <rect class="b-face" x="30" y="30" width="460" height="190" />
+            <text class="chalk" x="70" y="100">你好!</text>
+            <text class="chalk" x="70" y="160">안녕하세요!</text>
+            <path class="chalk-line" pathLength="1" d="M70,182 C150,176 240,186 320,178" />
+            <text class="chalk small" x="350" y="200">FIRST CLASS</text>
+            <line class="b-tray" x1="30" y1="236" x2="490" y2="236" />
+            <!-- 교탁 + 책상 -->
+            <rect class="b-desk t" x="215" y="262" width="90" height="44" />
+            <rect class="b-desk" x="40" y="292" width="70" height="24" />
+            <rect class="b-desk" x="130" y="292" width="70" height="24" />
+            <rect class="b-desk" x="320" y="292" width="70" height="24" />
+            <rect class="b-desk" x="410" y="292" width="70" height="24" />
+            <line class="b-floor" x1="0" y1="320" x2="520" y2="320" />
+          </svg>
+          <figcaption class="mono">ELEV. — CLASSROOM, TOP FLOOR</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="dream-h" data-i18n="why.h">왜 고등학교 선생님일까 — 지금까지의 경험이 가리키는 곳</h3>
+      <div class="why">
+        <article class="why-item reveal">
+          <a class="why-link mono" href="#log1">← LOG 01</a>
+          <strong data-i18n="why1.h">학생들과 이야기해 보았습니다</strong>
+          <p data-i18n="why1.p">컴퓨터학원 인턴십에서 학생들과 조금씩 이야기를 나눠 보면서, 학생 곁에서 돕는 사람이 되고 싶다는 마음이 생겼습니다.</p>
+        </article>
+        <article class="why-item reveal">
+          <a class="why-link mono" href="#log2">← LOG 02</a>
+          <strong data-i18n="why2.h">한 반을 챙겨 보았습니다</strong>
+          <p data-i18n="why2.p">반장으로 한 학기 동안 반을 챙겼습니다. 고등학교 담임 선생님이 하는 일을 학생의 자리에서 미리 경험해 본 셈입니다.</p>
+        </article>
+        <article class="why-item reveal">
+          <a class="why-link mono" href="#log3">← LOG 03</a>
+          <strong data-i18n="why3.h">돕는 일이 즐겁습니다</strong>
+          <p data-i18n="why3.p">봉사활동을 하며 누군가를 돕는 기쁨을 알았습니다. 선생님도 결국 학생을 돕는 사람입니다.</p>
+        </article>
+        <article class="why-item reveal">
+          <a class="why-link mono" href="#log4">← LOG 04</a>
+          <strong data-i18n="why4.h">배움의 어려움을 압니다</strong>
+          <p data-i18n="why4.p">한국어를 0부터 6급까지 배워 봤기 때문에, 어려운 공부 앞에서 힘들어하는 고등학생의 마음을 이해할 수 있습니다.</p>
+        </article>
+      </div>
+
+      <h3 class="dream-h" data-i18n="road.h">공정표 — 선생님이 되기까지</h3>
+      <ol class="road reveal">
+        <li class="done"><span class="road-no mono">STEP 1</span><strong data-i18n="road1.h">기초 다지기</strong><small data-i18n="road1.p">한국어 6급, 인턴십, 반장, 봉사</small></li>
+        <li class="now"><span class="road-no mono">STEP 2</span><strong data-i18n="road2.h">가르칠 과목 정하고 공부하기</strong><small data-i18n="road2.p">대학에서 전공 공부 + 교직 과정</small></li>
+        <li><span class="road-no mono">STEP 3</span><strong data-i18n="road3.h">교원 자격 준비하기</strong><small data-i18n="road3.p">교원자격증 취득, 채용 준비</small></li>
+        <li class="goal"><span class="road-no mono">완공 · DONE</span><strong data-i18n="road4.h">고등학교 교실에 서기</strong><small data-i18n="road4.p">고등학생들 앞에서 첫 수업</small></li>
+      </ol>
+
+      <blockquote class="promise serif reveal" data-i18n="promise">“제가 배울 때 받았던 도움을, 이제는 고등학생들에게 돌려주는 선생님이 되고 싶습니다.”</blockquote>
+    </section>
+
+    <!-- ================= A-05 연락 (표제란) ================= -->
+    <section id="contact" class="wrap sheet" data-sheet="A-05">
+      <div class="sheet-head mono">
+        <span>A-05</span><span data-i18n="sh.contact">표제란 · TITLE BLOCK</span><span class="grow"></span><span>FINAL</span>
+      </div>
+      <div class="titleblock reveal">
+        <div class="tb-main">
+          <h2 class="contact-big serif" data-i18n="contact.title">만나서<br />반갑습니다.</h2>
+          <p class="muted" data-i18n="contact.desc">도면 검토 감사합니다. 수정 의견이나 궁금한 점은 언제든 편하게 보내 주세요. 중국어도, 한국어도 괜찮습니다.</p>
+          <!-- 이메일 주소: 바꾸려면 아래 세 군데(mailto, data-mail, 표시 글자)를 함께 바꾸세요 -->
+          <p class="mail-addr">
+            <span class="mail-k mono">E-MAIL</span>
+            <a class="mail-v mono" href="mailto:a22576570@gmail.com">a22576570@gmail.com</a>
+          </p>
+          <div class="contact-row">
+            <a class="btn solid" href="mailto:a22576570@gmail.com" data-i18n="contact.email">✉ 이메일 보내기</a>
+            <button class="btn line" type="button" id="copyMail" data-mail="a22576570@gmail.com"><span id="copyLabel" data-i18n="contact.copy">⧉ 주소 복사</span></button>
+          </div>
+        </div>
+        <dl class="tb-grid mono">
+          <div><dt>PROJECT</dt><dd data-i18n="tb.project">자기소개 도면집</dd></div>
+          <div><dt>DRAWN BY</dt><dd data-i18n="name">장호영</dd></div>
+          <div><dt>CHECKED BY</dt><dd class="you" data-i18n="tb.you">당신 ✓</dd></div>
+          <div><dt>DATE</dt><dd id="today">—</dd></div>
+          <div><dt>SHEET</dt><dd>A-05 / 05</dd></div>
+          <div class="seal-cell"><dt>SEAL</dt><dd><span class="stamp small serif">張</span></dd></div>
+          <!-- 이 사이트로 가는 QR 코드 -->
+          <div class="qr-cell" id="qrCell">
+            <div class="qr" id="qr" aria-label="이 사이트 QR 코드"></div>
+            <div class="qr-text">
+              <dt>SCAN</dt>
+              <dd data-i18n="qr.title">휴대폰으로 이 도면 열기</dd>
+              <small class="mono muted" id="qrUrl"></small>
+            </div>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot wrap mono">
+    <span>© <span id="year"></span> <span data-i18n="name">장호영</span> · <span data-i18n="foot.mat">자재: 언어 2종 · 자격증 3종 · 학생 1명</span></span>
+    <a href="#" data-i18n="top">맨 위로 ↑</a>
+  </footer>
+
+  <!-- 현재 도면 번호 (데스크톱) -->
+  <div class="now-sheet mono" id="nowSheet" aria-hidden="true">
+    <span id="nowId">A-00</span><i><b id="nowBar"></b></i><span id="nowPct">0%</span>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
